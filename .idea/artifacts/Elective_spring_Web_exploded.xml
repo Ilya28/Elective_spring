@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Elective_spring:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Elective_spring_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="Elective_spring/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Elective_spring" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
