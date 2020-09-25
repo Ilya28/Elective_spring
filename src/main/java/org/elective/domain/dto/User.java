@@ -27,6 +27,6 @@ public class User implements Serializable {
     private boolean blocked;
     private String language;
 
-    @OneToMany(mappedBy = "usr", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    Set<Registration> registrationSet;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Registration> registrationSet;
 }
