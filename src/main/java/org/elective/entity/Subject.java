@@ -1,9 +1,6 @@
-package org.elective.domain.dto;
+package org.elective.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Subject implements Serializable {
     private static final long serialVersionUID = 5516922183825895781L;
     @Id
@@ -21,6 +19,7 @@ public class Subject implements Serializable {
     private int id;
     private String nameEN;
     private String nameUA;
+    private String mapping;
     private String backgroundFile;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
