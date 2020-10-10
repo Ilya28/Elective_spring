@@ -16,6 +16,7 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/{locale:en|ua}")
 public class MainController {
     public static final String MAIN_PAGE_NAME = "index";
 

@@ -12,7 +12,7 @@ import org.elective.entity.User;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-//@RequestMapping(value = "/")
+@RequestMapping("/{locale:en|ua}")
 public class LoginController {
     private final UserService userService; // Autowired
 
