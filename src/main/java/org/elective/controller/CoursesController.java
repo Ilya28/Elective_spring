@@ -18,7 +18,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/{locale:en|ua}/courses")
+@RequestMapping("/{locale:\\ben|ua\\b}/courses")
 public class CoursesController {
     public static final String PAGE_NAME = "courses";
     public static final String COURSES_LIST = "users";

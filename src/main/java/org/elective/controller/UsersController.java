@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/{locale:en|ua}/users")
+@RequestMapping("/{locale:\\ben|ua\\b}/users")
 public class UsersController {
     public static final String USERS_LIST = "users";
     public static final String PAGE_NAME = "users";
