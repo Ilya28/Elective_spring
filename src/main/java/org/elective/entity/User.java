@@ -1,9 +1,6 @@
-package org.elective.domain.dto;
+package org.elective.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +12,11 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User implements Serializable {
+    enum Role {
+        USER, TEACHER, ADMIN;
+    }
     private static final long serialVersionUID = 1911711142825348252L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +24,8 @@ public class User implements Serializable {
     private String name;
     private String email;
     private byte[] password;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     private boolean blocked;
     private String language;
 
