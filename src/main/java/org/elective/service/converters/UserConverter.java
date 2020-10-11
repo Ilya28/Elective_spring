@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 public class UserConverter {
     public User UserDTOToUser(UserDTO userDTO) {
         Role role;
+        if (userDTO.getRole() == null)
+            userDTO.setRole("user");
         switch (userDTO.getRole().toLowerCase()) {
             case "admin":
                 role = Role.ADMIN;
