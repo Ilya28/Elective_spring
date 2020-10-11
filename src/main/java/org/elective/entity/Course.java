@@ -1,9 +1,6 @@
 package org.elective.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +12,8 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@ToString
 public class Course implements Serializable {
     private static final long serialVersionUID = 1211782142525898152L;
     @Id
@@ -24,6 +23,7 @@ public class Course implements Serializable {
     private String nameUA;
     private String descriptionEN;
     private String descriptionUA;
+    private String mapping;
     private String backgroundFile;
     private Date dateStart;
     private Date dateEnd;
