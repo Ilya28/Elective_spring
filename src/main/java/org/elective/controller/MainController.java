@@ -26,7 +26,7 @@ public class MainController {
     private final CourseRepo courseRepo;
     private final SubjectRepo subjectRepo;
 
-    @RequestMapping("/")
+    @RequestMapping({"/", "/index"})
     public String mainPage(Map<String, Object> model){
         log.info("{Main page - missing locale, redirect to " + DEFAULT_LOCALE + " version}");
         return ("redirect:/" + DEFAULT_LOCALE);
