@@ -48,6 +48,16 @@
                     <#else>
                         <li><a href="/login">Log in</a></li>
                     </#if>
+                    <#if locale = "en">
+                        <li><a href="#" onclick="changeLocale('ua')">UA</a></li>
+                    <#else>
+                        <li><a href="#" onclick="changeLocale('en')">EN</a></li>
+                    </#if>
+                    <script>
+                        function changeLocale(locale) {
+                            location.href = "/" + locale + (location.pathname).substring(3);
+                        }
+                    </script>
                 </ul>
             </div>
         </div>
