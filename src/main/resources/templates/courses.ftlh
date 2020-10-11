@@ -12,8 +12,9 @@
 <body>
 <@navbar.navbar role = "guest"/>
 
-<p></p>
-
+<br style="clear:both">
+<br style="clear:both">
+<br style="clear:both">
 <div class="col-md-8 col-md-offset-4">
     <h4>Courses</h4>
 </div>
@@ -21,7 +22,7 @@
     <div class="row">
         <ul class="thumbnails list-unstyled">
 
-
+            <#list subjects as subject>
             <li class="col-md-3">
                 <div class="thumbnail" style="padding: 0">
                     <div style="padding:4px">
@@ -34,7 +35,7 @@
                     </div>
                 </div>
             </li>
-
+            </#list>
 
         </ul>
     </div>
