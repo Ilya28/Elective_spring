@@ -1,4 +1,4 @@
-package org.elective.domain.dto;
+package org.elective.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
