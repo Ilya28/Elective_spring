@@ -14,16 +14,13 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 public class User implements Serializable {
-    enum Role {
-        USER, TEACHER, ADMIN;
-    }
     private static final long serialVersionUID = 1911711142825348252L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     private String name;
     private String email;
-    private byte[] password;
+    private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
     private boolean blocked;
