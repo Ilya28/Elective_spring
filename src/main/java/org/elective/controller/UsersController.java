@@ -10,6 +10,7 @@ import org.elective.repos.CourseRepo;
 import org.elective.repos.SubjectRepo;
 import org.elective.repos.UserRepo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,9 +31,11 @@ public class UsersController {
 
     @RequestMapping
     public String usersPage(@RequestParam(defaultValue = "1") Integer page /* TODO: Pagination */,
-                              @RequestParam(required = false) String filterByCourse,
-                              @RequestParam(required = false) String filterBySubject,
-                              Map<String, Object> model) {
+                            @RequestParam(required = false) String filterByCourse,
+                            @RequestParam(required = false) String filterBySubject,
+                            @PathVariable String locale,
+                            Map<String, Object> model) {
+        model.put("locale", locale);
         model.put("page_count", 5); /* TODO: Pagination */
         model.put("page", page); /* TODO: Pagination */
         if (filterByCourse == null || filterByCourse.isEmpty()) {
