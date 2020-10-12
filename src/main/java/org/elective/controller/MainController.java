@@ -2,12 +2,11 @@ package org.elective.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.elective.entity.Course;
-import org.elective.entity.Subject;
-import org.elective.entity.User;
 import org.elective.repos.CourseRepo;
 import org.elective.repos.SubjectRepo;
 import org.elective.repos.UserRepo;
+import org.elective.service.LocaleService;
+import org.elective.service.NavbarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +21,8 @@ public class MainController {
     public static final String MAIN_PAGE_NAME = "index";
     public static final String DEFAULT_LOCALE = "en";
 
-    private final UserRepo userRepo;
-    private final CourseRepo courseRepo;
-    private final SubjectRepo subjectRepo;
+    private final NavbarService navbarService;
+    private final LocaleService localeService;
 
     @RequestMapping({"/", "/index"})
     public String mainPage(Map<String, Object> model){
@@ -36,7 +34,8 @@ public class MainController {
     public String mainPageWithLocale(Map<String, Object> model,
                                      @PathVariable String locale){
         log.info("{Main page}");
-        model.put("locale", locale);
+        localeService.putLocale(model, locale);
+        navbarService.putSubjects(model, locale);
         return MAIN_PAGE_NAME;
     }
 }

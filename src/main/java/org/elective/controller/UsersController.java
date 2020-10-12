@@ -9,6 +9,8 @@ import org.elective.entity.User;
 import org.elective.repos.CourseRepo;
 import org.elective.repos.SubjectRepo;
 import org.elective.repos.UserRepo;
+import org.elective.service.LocaleService;
+import org.elective.service.NavbarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,8 @@ public class UsersController {
 
     private final UserRepo userRepo;
     private final CourseRepo courseRepo;
-    private final SubjectRepo subjectRepo;
+    private final LocaleService localeService;
+    private final NavbarService navbarService;
 
     @RequestMapping
     public String usersPage(@RequestParam(defaultValue = "1") Integer page /* TODO: Pagination */,
@@ -35,7 +38,8 @@ public class UsersController {
                             @RequestParam(required = false) String filterBySubject,
                             @PathVariable String locale,
                             Map<String, Object> model) {
-        model.put("locale", locale);
+        localeService.putLocale(model, locale);
+        navbarService.putSubjects(model, locale);
         model.put("page_count", 5); /* TODO: Pagination */
         model.put("page", page); /* TODO: Pagination */
         if (filterByCourse == null || filterByCourse.isEmpty()) {
