@@ -26,14 +26,11 @@
                            aria-expanded="false">Courses <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Topic</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Topic</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Topic</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Topic</a></li>
-
+                            <#list subjects as subject>
+                                <li><a href="/${locale}/courses/subject/${subject.mapping}">${subject.name}</a></li>
+                                <li class="divider"></li>
+                            </#list>
+                            <li><a href="/${locale}/courses">All courses</a></li>
                         </ul>
                     </li>
                     <#if role == "admin">
