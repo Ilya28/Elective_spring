@@ -14,6 +14,7 @@
 
 <br style="clear:both">
 <br style="clear:both">
+<br style="clear:both">
 <div class="col-md-8 col-md-offset-4">
     <h4>Courses</h4>
 </div>
