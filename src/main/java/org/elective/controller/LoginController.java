@@ -19,11 +19,12 @@ public class LoginController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/register")
-    public ResponseEntity<String> registerFormController(@RequestBody UserDTO auth){
+    public ResponseEntity<String> registerFormController(@RequestBody UserDTO auth,
+                                                         @PathVariable String locale){
         log.info("{new user}");
-        boolean result = loginService.saveUser(auth);
-        log.info(result ? "{new user added}": "{user with this email already exist}");
-        log.info("{}", auth);
+        boolean result = loginService.saveNewUser(auth, locale);
+        log.info(result ? "Register: new user added": "Register: user with this email already exist");
+        log.info("> {}", auth);
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
