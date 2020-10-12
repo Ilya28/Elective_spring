@@ -19,8 +19,10 @@ public class LoginService {
     private final UserConverter userConverter;
 
     @Transactional
-    public boolean saveUser(UserDTO userDTO) {
+    public boolean saveNewUser(UserDTO userDTO, String locale) {
         userDTO.setRole("user");
+        userDTO.setBlocked(false);
+        userDTO.setLanguage(locale);
         User user = userConverter.UserDTOToUser(userDTO);
         Optional<User> expected = userRepo.findByEmail(user.getEmail());
         if (expected.isPresent())
