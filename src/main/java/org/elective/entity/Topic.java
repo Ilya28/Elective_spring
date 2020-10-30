@@ -17,7 +17,7 @@ public class Topic implements Serializable {
     private static final long serialVersionUID = 5511412183825895567L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String nameEN;
     private String nameUA;
 
