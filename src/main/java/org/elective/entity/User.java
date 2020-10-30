@@ -6,22 +6,22 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Entity
-@Table(name = "usr")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "usr")
+@Entity
 public class User implements Serializable {
     private static final long serialVersionUID = 1911711142825348252L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    private Long id;
     private String name;
     private String email;
     private String password;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private Role role;
     private boolean blocked;
     private String language;
