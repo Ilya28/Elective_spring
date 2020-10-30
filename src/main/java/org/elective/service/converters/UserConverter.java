@@ -1,30 +1,24 @@
 package org.elective.service.converters;
 
+import lombok.extern.slf4j.Slf4j;
 import org.elective.dto.UserDTO;
 import org.elective.entity.User;
 import org.elective.entity.Role;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class UserConverter {
     public User UserDTOToUser(UserDTO userDTO) {
         Role role;
-        if (userDTO.getRole() == null)
-            userDTO.setRole("user");
-        switch (userDTO.getRole().toLowerCase()) {
-            case "admin":
-                role = Role.ADMIN;
-                break;
-            case "teacher":
-                role = Role.TEACHER;
-                break;
-            case "user":
-                role = Role.USER;
-                break;
-            default:
-                throw new IllegalStateException("Unknown role: " + userDTO.getRole());
+        try {
+            role = Role.valueOf(userDTO.getRole().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            log.error("Unknown role: {}. The role param of User is set to: ROLE_USER.", userDTO.getRole());
+            role = Role.ROLE_USER;
         }
         return User.builder()
+                .id(userDTO.getId())
                 .blocked(userDTO.isBlocked())
                 .email(userDTO.getEmail())
                 .language(userDTO.getLanguage())
@@ -36,6 +30,7 @@ public class UserConverter {
 
     public UserDTO userToUserDTO(User user) {
         return UserDTO.builder()
+                .id(user.getId())
                 .blocked(user.isBlocked())
                 .email(user.getEmail())
                 .language(user.getLanguage())
