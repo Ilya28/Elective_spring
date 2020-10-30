@@ -2,6 +2,9 @@ package org.elective.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -9,13 +12,23 @@ import lombok.*;
 @Builder
 @ToString
 public class CourseDTO {
-    private String name;
+    private Long id;
+    private String name; // localized
+    @NotBlank
+    private String nameEN;
+    @NotBlank
+    private String nameUA;
     private String description;
-    private String mapping;
+    @NotBlank
+    private String descriptionEN;
+    @NotBlank
+    private String descriptionUA;
+    @Pattern(regexp = "[\\w_]+")
     private String backgroundFile;
     private String dateStart;
     private String dateEnd;
     private int seats;
     private int signedUp;
     private String subject;
+    private String subjectMapping;
 }
