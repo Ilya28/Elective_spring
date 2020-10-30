@@ -1,28 +1,28 @@
 package org.elective.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Entity
 public class Registration implements Serializable{
     private static final long serialVersionUID = 1911782042825898252L;
     @Embeddable
     @NoArgsConstructor
+    @AllArgsConstructor
+    @EqualsAndHashCode
     public static class RegistrationPK implements Serializable {
         private static final long serialVersionUID = -2939678521007522701L;
         @Column(nullable = false)
-        private int courseID;
+        private Long courseID;
         @Column(nullable = false)
-        private int userID;
+        private Long userID;
     }
 
     @EmbeddedId
