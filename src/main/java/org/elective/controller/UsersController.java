@@ -3,21 +3,19 @@ package org.elective.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.elective.entity.Course;
-import org.elective.entity.Registration;
-import org.elective.entity.User;
-import org.elective.repos.CourseRepo;
-import org.elective.repos.SubjectRepo;
-import org.elective.repos.UserRepo;
-import org.elective.service.LocaleService;
-import org.elective.service.NavbarService;
+import org.elective.service.LocalizedTextSupplier;
+import org.elective.service.UsersService;
+import org.elective.service.preparing.PagePrepareService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,34 +25,30 @@ public class UsersController {
     public static final String USERS_LIST = "users";
     public static final String PAGE_NAME = "users";
 
-    private final UserRepo userRepo;
-    private final CourseRepo courseRepo;
-    private final LocaleService localeService;
-    private final NavbarService navbarService;
+    private final UsersService usersService;
+    private final PagePrepareService pagePrepareService;
+    private final LocalizedTextSupplier localizedTextSupplier;
 
+    @Secured({"ROLE_ADMIN"})
     @RequestMapping
-    public String usersPage(@RequestParam(defaultValue = "1") Integer page /* TODO: Pagination */,
-                            @RequestParam(required = false) String filterByCourse,
-                            @RequestParam(required = false) String filterBySubject,
+    public String usersPage(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
+                            @RequestParam(required = false) Optional<String> filterByCourse,
+                            @RequestParam(required = false) Optional<String> deleted,
+                            @RequestParam(required = false) Optional<String> added,
                             @PathVariable String locale,
                             Map<String, Object> model) {
-        localeService.putLocale(model, locale);
-        navbarService.putSubjects(model, locale);
-        model.put("page_count", 5); /* TODO: Pagination */
-        model.put("page", page); /* TODO: Pagination */
-        if (filterByCourse == null || filterByCourse.isEmpty()) {
-            model.put(USERS_LIST, userRepo.findAll());
-            return PAGE_NAME;
-        }
-        Optional<Course> course = courseRepo.findCourseByNameEN(filterByCourse);
-        if (course.isPresent()) {
-            List<User> usersByCourse = course.get().getRegistrationSet().stream()
-                    .map(Registration::getUser)
-                    .collect(Collectors.toList());
-            model.put(USERS_LIST, usersByCourse);
-        } else {
-            model.put(USERS_LIST, Collections.emptyList());
-        }
+        log.info("Users page (users table)");
+        pagePrepareService.prepareAllStaticOnPage(model, locale);
+        if (!filterByCourse.isPresent() || filterByCourse.get().isEmpty()) {
+            model.put(USERS_LIST, usersService.getAllUsers(pageable));
+        } else
+            model.put(USERS_LIST, usersService.getUsersByCourseName(filterByCourse.get(), pageable));
+        pagePrepareService.addMessageIfExistParam(model,
+                localizedTextSupplier.getLocalizedText("users.msg.deleted", locale),
+                deleted);
+        pagePrepareService.addMessageIfExistParam(model,
+                localizedTextSupplier.getLocalizedText("users.msg.added", locale),
+                added);
         return PAGE_NAME;
     }
 }
