@@ -2,11 +2,7 @@ package org.elective.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.elective.repos.CourseRepo;
-import org.elective.repos.SubjectRepo;
-import org.elective.repos.UserRepo;
-import org.elective.service.LocaleService;
-import org.elective.service.NavbarService;
+import org.elective.service.preparing.PagePrepareService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,24 +14,22 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping
 public class MainController {
-    public static final String MAIN_PAGE_NAME = "index";
+    public static final String MAIN_PAGE_NAME = "home";
     public static final String DEFAULT_LOCALE = "en";
 
-    private final NavbarService navbarService;
-    private final LocaleService localeService;
+    private final PagePrepareService pagePrepareService;
 
-    @RequestMapping({"/", "/index"})
+    @RequestMapping("/")
     public String mainPage(Map<String, Object> model){
-        log.info("{Main page - missing locale, redirect to " + DEFAULT_LOCALE + " version}");
-        return ("redirect:/" + DEFAULT_LOCALE);
+        log.info("Main page - missing locale, redirect to " + DEFAULT_LOCALE + " version");
+        return ("redirect:/" + DEFAULT_LOCALE + "/home");
     }
 
-    @RequestMapping("/{locale:\\ben|ua\\b}")
+    @RequestMapping("/{locale:\\ben|ua\\b}/home")
     public String mainPageWithLocale(Map<String, Object> model,
                                      @PathVariable String locale){
-        log.info("{Main page}");
-        localeService.putLocale(model, locale);
-        navbarService.putSubjects(model, locale);
+        log.info("Main page");
+        pagePrepareService.prepareAllStaticOnPage(model, locale);
         return MAIN_PAGE_NAME;
     }
 }
