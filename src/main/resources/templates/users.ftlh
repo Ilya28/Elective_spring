@@ -1,5 +1,6 @@
 <#import "parts/navbar.ftlh" as navbar>
 <#import "parts/header.ftlh" as header>
+<#import "parts/pager.ftlh" as p>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +10,14 @@
     <link href="css/table.css" rel="stylesheet">
 </head>
 <body>
-<@navbar.navbar role = "guest"/>
+<@navbar.navbar/>
 
 <br style="clear:both">
 <br style="clear:both">
 <br style="clear:both">
-<div class="col-md-8 col-md-offset-4">
+<!--div class="col-md-8 col-md-offset-4">
     <h4>Users</h4>
-</div>
+</div-->
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
 
@@ -28,10 +29,10 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col col-xs-6">
-                            <h3 class="panel-title">Panel Heading</h3>
+                            <h3 class="panel-title">${msg("users.title")}</h3>
                         </div>
                         <div class="col col-xs-6 text-right">
-                            <button type="button" class="btn btn-sm btn-primary btn-create">Create New</button>
+                            <button type="button" class="btn btn-sm btn-primary btn-create">${msg("btn.create")}</button>
                         </div>
                     </div>
                 </div>
@@ -41,17 +42,17 @@
                         <tr>
                             <th><em class="fa fa-cog"></em></th>
                             <th class="hidden-xs">ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
+                            <th>${msg("user.name")}</th>
+                            <th>${msg("user.email")}</th>
+                            <th>${msg("user.role")}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <#list users as item>
+                        <#list users.content as item>
                             <tr>
                                 <td align="center">
-                                    <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
-                                    <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
+                                    <a href="users/user_${item.id}/modify" class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                                    <a href="users/user_${item.id}/delete" class="btn btn-danger"><em class="fa fa-trash"></em></a>
                                 </td>
                                 <td class="hidden-xs">${item.id}</td>
                                 <td>${item.name}</td>
@@ -65,25 +66,7 @@
 
                 </div>
                 <div class="panel-footer">
-                    <div class="row">
-                        <div class="col col-xs-4">Page 1 of 5
-                        </div>
-                        <div class="col col-xs-8">
-                            <ul class="pagination hidden-xs pull-right">
-                                <#list 1..page_count as i>
-                                    <#if i == page>
-                                        <li class="active"><a href="#">${i}<span class="sr-only">(current)</span></a></li>
-                                    <#else>
-                                        <li><a href="#">${i}</a></li>
-                                    </#if>
-                                </#list>
-                            </ul>
-                            <ul class="pagination visible-xs pull-right">
-                                <li><a href="#">«</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <@p.pager "users" users/>
                 </div>
             </div>
 
