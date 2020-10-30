@@ -9,6 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface SubjectRepo  extends CrudRepository<Subject, Long> {
-    public Optional<Subject> findSubjectByNameEN(String name);
+    Optional<Subject> findSubjectByNameEN(String name);
+    Optional<Subject> findSubjectByMapping(String mapping);
     List<Subject> findAll();
+
+    Long deleteSubjectByMapping(String mapping);
 }
