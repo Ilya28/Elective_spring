@@ -16,7 +16,7 @@ public class Subject implements Serializable {
     private static final long serialVersionUID = 5516922183825895781L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String nameEN;
     private String nameUA;
     private String mapping;
