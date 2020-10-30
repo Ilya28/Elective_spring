@@ -1,22 +1,20 @@
 package org.elective.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@Entity
 public class Grade implements Serializable{
     private static final long serialVersionUID = 1511412042825897550L;
     @Embeddable
     @NoArgsConstructor
+    @EqualsAndHashCode
     public static class GradePK implements Serializable {
         private static final long serialVersionUID = -2939678521007522701L;
         @Column(nullable = false)
