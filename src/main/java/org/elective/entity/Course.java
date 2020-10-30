@@ -4,7 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -18,15 +19,16 @@ public class Course implements Serializable {
     private static final long serialVersionUID = 1211782142525898152L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String nameEN;
     private String nameUA;
+    @Column(length = 6000)
     private String descriptionEN;
+    @Column(length = 6000)
     private String descriptionUA;
-    private String mapping;
     private String backgroundFile;
-    private Date dateStart;
-    private Date dateEnd;
+    private LocalDate dateStart;
+    private LocalDate dateEnd;
     private int seats;
     private int signedUp;
 
