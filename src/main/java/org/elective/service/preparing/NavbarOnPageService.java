@@ -1,4 +1,4 @@
-package org.elective.service;
+package org.elective.service.preparing;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,15 +15,15 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class NavbarService {
-    public static final String SUBJECTS_LIST = "subjects";
+public class NavbarOnPageService {
+    private static final String SUBJECTS_LIST = "subjects";
 
     private final SubjectRepo subjectRepo;
     private final SubjectConverter subjectConverter;
 
     public void putSubjects(Map<String, Object> model, String locale) {
         List<SubjectDTO> subjects = subjectRepo.findAll().stream()
-                    .map(subject -> subjectConverter.SubjectToSubjectDTO(subject, locale))
+                    .map(subject -> subjectConverter.subjectToSubjectDTO(subject, locale))
                     .collect(Collectors.toList());
         model.put(SUBJECTS_LIST, subjects);
     }
