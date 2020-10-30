@@ -13,6 +13,7 @@ import org.elective.service.converters.RegistrationConverter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -35,6 +36,7 @@ public class RegistrationsService {
         return registration.map(r -> registrationConverter.registrationToRegistrationDTO(r, locale));
     }
 
+    @Transactional
     public void registerByEmailAndCourseId(String email, Long courseId) {
         Optional<User> user = userRepo.findByEmail(email);
         Optional<Course> course = courseRepo.findById(courseId);
