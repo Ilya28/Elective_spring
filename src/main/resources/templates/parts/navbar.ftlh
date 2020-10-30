@@ -1,4 +1,4 @@
-<#macro navbar role>
+<#macro navbar>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -8,42 +8,46 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Elective</a>
+                <a class="navbar-brand" href="/">${msg("navbar.title")}</a>
             </div>
 
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <#if role != "guest">
+                    <#if role != "ROLE_ANONYMOUS">
                         <li class="active">
-                            <a href="#">Home<span class="sr-only">(current)</span></a>
+                            <a href="#">${msg("navbar.home")}<span class="sr-only">(current)</span></a>
                         </li>
                         <li>
-                            <a href="#">Profile</a>
+                            <a href="#">${msg("navbar.profile")}</a>
                         </li>
                     </#if>
                     <li class="dropdown">
                         <a href="/courses" class="dropdown-toggle" data-toggle="dropdown"
-                           aria-expanded="false">Courses <span class="caret"></span>
+                           aria-expanded="false">${msg("navbar.courses")} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <#list subjects as subject>
-                                <li><a href="/${locale}/courses/subject/${subject.mapping}">${subject.name}</a></li>
+                            <li><a href="/${locale}/subjects">${msg("navbar.show_subjects")}</a></li>
+                            <li class="divider"></li>
+                            <li class="divider"></li>
+                            <#list subjects as item>
+                                <li><a href="/${locale}/courses/${item.mapping}">${item.name}</a></li>
                                 <li class="divider"></li>
                             </#list>
-                            <li><a href="/${locale}/courses">All courses</a></li>
+                            <li><a href="/${locale}/courses">${msg("navbar.all_courses")}</a></li>
                         </ul>
                     </li>
                     <#if role == "admin">
                         <li>
-                            <a href="#">Users</a>
+                            <a href="#">${msg("navbar.users")}</a>
                         </li>
                     </#if>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <#if role != "guest">
-                        <li><a href="/logout">Log out</a></li>
+                    ${role}
+                    <#if role != "ROLE_ANONYMOUS">
+                        <li><a href="/logout">${msg("navbar.log_out")}</a></li>
                     <#else>
-                        <li><a href="/login">Log in</a></li>
+                        <li><a href="/login">${msg("navbar.log_in")}</a></li>
                     </#if>
                     <#if locale = "en">
                         <li><a href="#" onclick="changeLocale('ua')">UA</a></li>

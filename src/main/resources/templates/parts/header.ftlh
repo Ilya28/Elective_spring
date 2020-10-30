@@ -15,7 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
 </#macro>
 <#macro navbar>
-    <link href="css/navbar.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
 </#macro>
 <#macro all>
     <@jquery/>

@@ -1,5 +1,5 @@
 <#macro login_form>
-<div class="container" ng-app="login_form" style="margin-top: 60px">
+<div class="container" ng-app="login_form" style="margin-top: 2px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-login">
@@ -18,18 +18,19 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <!-- ========================================================================= -->
-                            <form ng-controller="LogCtrl"
-                                  id="login-form" role="form" style="display: block;" name="form" autocomplete="off" novalidate ng-submit="form.$valid && sendForm(auth)">
+                            <!-- <form ng-controller="LogCtrl"
+                                  id="login-form" role="form" style="display: block;" name="form" autocomplete="off" novalidate ng-submit="form.$valid && sendForm(auth)">-->
+                            <form id="login-form" role="form" style="display: block;" name="form" autocomplete="off" method="post" action="/${locale}/login">
                                 <div class="form-group">
                                     <input type="text"
-                                           name="email"
+                                           name="username"
                                            id="email"
                                            tabindex="1"
                                            class="form-control"
-                                           placeholder="Email Address"
+                                           placeholder="Email address"
                                            value=""
-                                           required
-                                           ng-model="auth.email">
+                                           required>
+                                    <!-- ng-model="auth.email">-->
                                 </div>
                                 <div class="form-group">
                                     <input type="password"
@@ -38,8 +39,8 @@
                                            tabindex="2"
                                            class="form-control"
                                            placeholder="Password"
-                                           required
-                                           ng-model="auth.password">
+                                           required>
+                                    <!-- ng-model="auth.password">-->
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
@@ -49,12 +50,12 @@
                                                    id="login-submit"
                                                    tabindex="4"
                                                    class="form-control btn btn-login"
-                                                   value="Log In"
-                                                   ng-disabled="form.$invalid">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <input type="hidden" name="_csrf" value="{_csrf.token}"/> -->
+                                                   value="Log In">
+                                            <!-- ng-disabled="form.$invalid"> -->
+                                 </div>
+                             </div>
+                         </div>
+                         <!-- <input type="hidden" name="_csrf" value="{_csrf.token}"/> -->
                             </form>
                             <!-- ========================================================================= -->
                             <form ng-controller="RegCtrl"
@@ -65,7 +66,7 @@
                                            id="fullName"
                                            tabindex="1"
                                            class="form-control"
-                                           placeholder="FullName"
+                                           placeholder="Full name"
                                            value=""
                                            required
                                            ng-model="auth.name">
@@ -76,7 +77,7 @@
                                            id="email"
                                            tabindex="1"
                                            class="form-control"
-                                           placeholder="Email Address"
+                                           placeholder="Email address"
                                            value=""
                                            required
                                            ng-model="auth.email">
@@ -112,7 +113,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <input type="hidden" name="_csrf" value="{_csrf.token}"/> -->
+                                <!--  <input type="hidden" name="_csrf" value="{_csrf.token}"/> -->
                             </form>
                             <!-- ========================================================================= -->
                         </div>

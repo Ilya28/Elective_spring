@@ -10,9 +10,15 @@
     <@header.all/>
 </head>
 <body>
-<@navbar.navbar role = "guest"/>
+<@navbar.navbar/>
+
+<br style="clear:both">
+<br style="clear:both">
+<br style="clear:both">
+
 <div class="col-md-8 col-md-offset-4">
-    <h2>Some error</h2>
+    <h1>Some error</h1>
+    <h3>${error_message}</h3>
 </div>
 </body>
 </html>
