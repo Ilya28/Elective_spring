@@ -1,24 +1,32 @@
 package org.elective.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elective.dto.SubjectDTO;
-import org.elective.entity.Course;
 import org.elective.entity.Subject;
 import org.elective.repos.SubjectRepo;
 import org.elective.service.converters.SubjectConverter;
+import org.elective.service.preparing.LocalizationPreparingService;
+import org.elective.service.preparing.NavbarOnPageService;
+import org.elective.service.preparing.RoleOnPageService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
-public class SubjectsService {
+public class SubjectsService extends AbstractService {
     private final SubjectRepo subjectRepo;
     private final SubjectConverter subjectConverter;
 
-    public boolean exist(String mapping) {
+    public SubjectsService(LocalizationPreparingService localeService, NavbarOnPageService navbarService,
+                           RoleOnPageService roleService, SubjectRepo subjectRepo,
+                           SubjectConverter subjectConverter) {
+        super(localeService, navbarService, roleService);
+        this.subjectRepo = subjectRepo;
+        this.subjectConverter = subjectConverter;
+    }
+
+    public boolean isExist(String mapping) {
         Optional<Subject> subject = subjectRepo.findSubjectByMapping(mapping);
         return subject.isPresent();
     }

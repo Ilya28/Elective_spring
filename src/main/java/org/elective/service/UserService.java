@@ -1,13 +1,13 @@
 package org.elective.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elective.dto.UserDTO;
-import org.elective.entity.Registration;
 import org.elective.entity.User;
-import org.elective.repos.RegistrationRepo;
 import org.elective.repos.UserRepo;
 import org.elective.service.converters.UserConverter;
+import org.elective.service.preparing.LocalizationPreparingService;
+import org.elective.service.preparing.NavbarOnPageService;
+import org.elective.service.preparing.RoleOnPageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,14 +15,23 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
-public class UserService {
+public class UserService extends AbstractService {
     private final UserRepo userRepo;
     private final UserConverter userConverter;
-    private final RegistrationRepo registrationRepo;
+
+    public UserService(LocalizationPreparingService localeService, NavbarOnPageService navbarService,
+                       RoleOnPageService roleService, UserRepo userRepo, UserConverter userConverter) {
+        super(localeService, navbarService, roleService);
+        this.userRepo = userRepo;
+        this.userConverter = userConverter;
+    }
 
     public Optional<User> findByEmail(String email){
         return userRepo.findByEmail(email);
+    }
+
+    public Optional<UserDTO> getByEmail(String email){
+        return userRepo.findByEmail(email).map(userConverter::userToUserDTO);
     }
 
     public Optional<UserDTO> getUserById(Long id) {
