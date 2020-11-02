@@ -58,6 +58,7 @@
                             <th><em class="fa fa-cog"></em></th>
                             <th>${msg("courses.table.subject")}</th>
                             <th>${msg("courses.table.name")}</th>
+                            <th>${msg("courses.table.teacher")}</th>
                             <th>${msg("courses.table.seats")}</th>
                             <th>${msg("courses.table.start")}</th>
                             <th>${msg("courses.table.end")}</th>
@@ -72,6 +73,7 @@
                                 </td>
                                 <td>${item.subject}</td>
                                 <td><a href="/${locale}/courses/${item.subjectMapping}/course_${item.id}">${item.name}</a></td>
+                                <td><a href="/${locale}/users/user_${item.teacherId}">${item.teacherName}</a></td>
                                 <td>${item.signedUp} / ${item.seats}</td>
                                 <td>${item.dateStart}</td>
                                 <td>${item.dateEnd}</td>
