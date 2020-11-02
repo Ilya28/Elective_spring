@@ -20,7 +20,7 @@
                             <!-- ========================================================================= -->
                             <!-- <form ng-controller="LogCtrl"
                                   id="login-form" role="form" style="display: block;" name="form" autocomplete="off" novalidate ng-submit="form.$valid && sendForm(auth)">-->
-                            <form id="login-form" role="form" style="display: block;" name="form" autocomplete="off" method="post" action="/${locale}/login">
+                            <form id="login-form" role="form" style="display: block;" name="form" autocomplete="off" method="post" action="/login">
                                 <div class="form-group">
                                     <input type="text"
                                            name="username"
