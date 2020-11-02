@@ -14,7 +14,7 @@ angular.module("login_form",[])
                 window.alert("Password confirmation error");
             } else {
                 const parameter = JSON.stringify({name: auth.name, email: auth.email, password: auth.password});
-                $http.post("/en/register", parameter);
+                $http.post("/register", parameter);
             }
         }
     });
