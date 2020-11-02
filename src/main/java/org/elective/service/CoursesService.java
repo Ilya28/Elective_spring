@@ -1,6 +1,5 @@
 package org.elective.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elective.dto.CourseDTO;
 import org.elective.entity.Course;
@@ -12,18 +11,19 @@ import org.elective.repos.RegistrationRepo;
 import org.elective.repos.SubjectRepo;
 import org.elective.repos.UserRepo;
 import org.elective.service.converters.CourseConverter;
+import org.elective.service.preparing.LocalizationPreparingService;
+import org.elective.service.preparing.NavbarOnPageService;
+import org.elective.service.preparing.RoleOnPageService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
-public class CoursesService {
+public class CoursesService extends AbstractService {
     private static final String DEFAULT_DESCRIPTION_EN = "No description";
     private static final String DEFAULT_DESCRIPTION_UA = "Немає опису";
 
@@ -32,6 +32,17 @@ public class CoursesService {
     private final UserRepo userRepo;
     private final RegistrationRepo registrationRepo;
     private final CourseConverter courseConverter;
+
+    public CoursesService(LocalizationPreparingService localeService, NavbarOnPageService navbarService,
+                          RoleOnPageService roleService, CourseRepo courseRepo, SubjectRepo subjectRepo,
+                          RegistrationRepo registrationRepo, CourseConverter courseConverter, UserRepo userRepo) {
+        super(localeService, navbarService, roleService);
+        this.courseRepo = courseRepo;
+        this.subjectRepo = subjectRepo;
+        this.registrationRepo = registrationRepo;
+        this.courseConverter = courseConverter;
+        this.userRepo = userRepo;
+    }
 
     /**
      * Mapping path for this course
@@ -77,7 +88,7 @@ public class CoursesService {
         return page.map(e -> courseConverter.courseToCourseDTO(e, locale));
     }
 
-    public void saveCourse(CourseDTO courseDTO, String subjectMapping) {
+    public void saveCourse(CourseDTO courseDTO, String teacherEmail, String subjectMapping) {
         Optional<Subject> subject = subjectRepo.findSubjectByMapping(subjectMapping);
         if (!subject.isPresent()) {
             log.error("Unable to save course. Unknown subject: '{}'", subjectMapping);
@@ -88,6 +99,12 @@ public class CoursesService {
         if (courseDTO.getDescriptionUA() == null || courseDTO.getDescriptionUA().isEmpty())
             courseDTO.setDescriptionUA(DEFAULT_DESCRIPTION_UA);
         Course course = courseConverter.courseDTOToCourse(courseDTO);
+
+        Optional<User> teacher = userRepo.findByEmail(teacherEmail);
+        if (!teacher.isPresent()) {
+            log.error("Cant find current user with email {" + teacherEmail + "}");
+        }
+        course.setTeacher(teacher.orElse(null));
         course.setSubject(subject.get());
         course.setSignedUp(0);
         courseRepo.save(course);
@@ -118,5 +135,10 @@ public class CoursesService {
 
     public void deleteCourseById(Long id) {
         courseRepo.deleteById(id);
+    }
+
+    public Page<CourseDTO> getCoursesByTeacherUsername(String username, String locale, Pageable pageable) {
+        Page<Course> page = courseRepo.findCoursesByTeacher_Email(username, pageable);
+        return page.map(e -> courseConverter.courseToCourseDTO(e, locale));
     }
 }
