@@ -8,13 +8,19 @@
                 <li class="page-item disabled">
                     <a class="page-link" href="#">${msg("pager.pages")}</a>
                 </li>
-                <#list 1..page.getTotalPages() as i>
-                    <#if i-1 == page.getNumber()>
-                        <li class="page-item active"><a class="page-link" href="#">${i}<span class="sr-only">(current)</span></a></li>
-                    <#else>
-                        <li class="page-item"><a class="page-link" href="${url}?page=${i-1}">${i}</a></li>
-                    </#if>
-                </#list>
+                <#if page.getTotalPages() gt 0>
+                    <#list 1..page.getTotalPages() as i>
+                        <#if i-1 == page.getNumber()>
+                            <li class="page-item active"><a class="page-link" href="#">${i}<span class="sr-only">(current)</span></a></li>
+                        <#else>
+                            <li class="page-item"><a class="page-link" href="${url}?page=${i-1}">${i}</a></li>
+                        </#if>
+                    </#list>
+                 <#else >
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">0</a>
+                    </li>
+                </#if>
             </ul>
             <ul class="pagination visible-xs pull-right">
                 <#if page.getNumber() gt 0>

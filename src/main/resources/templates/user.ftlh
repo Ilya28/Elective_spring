@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>User</title>
     <@header.all/>
     <link href="css/pagination.css" rel="stylesheet">
 </head>

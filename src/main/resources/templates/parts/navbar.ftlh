@@ -15,20 +15,19 @@
                 <ul class="nav navbar-nav">
                     <#if role != "ROLE_ANONYMOUS">
                         <li class="active">
-                            <a href="#">${msg("navbar.home")}<span class="sr-only">(current)</span></a>
+                            <a href="/${locale}/home">${msg("navbar.home")}<span class="sr-only">(current)</span></a>
                         </li>
                         <li>
-                            <a href="#">${msg("navbar.profile")}</a>
+                            <a href="/${locale}/profile">${msg("navbar.profile")}</a>
                         </li>
                     </#if>
-                    <li class="dropdown">
-                        <a href="/courses" class="dropdown-toggle" data-toggle="dropdown"
-                           aria-expanded="false">${msg("navbar.courses")} <span class="caret"></span>
-                        </a>
+                    <li class="pr-0 mr-0">
+                        <a class="pr-0 mr-0" href="/${locale}/subjects" role="button">${msg("navbar.courses")}</a>
+                    </li>
+                    <li class="dropdown pl-0 ml-0">
+                        <a href="#" class="pl-0 ml-0 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                           aria-expanded="false" aria-haspopup="true"><span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="/${locale}/subjects">${msg("navbar.show_subjects")}</a></li>
-                            <li class="divider"></li>
-                            <li class="divider"></li>
                             <#list subjects as item>
                                 <li><a href="/${locale}/courses/${item.mapping}">${item.name}</a></li>
                                 <li class="divider"></li>
@@ -49,16 +48,20 @@
                     <#else>
                         <li><a href="/login">${msg("navbar.log_in")}</a></li>
                     </#if>
-                    <#if locale = "en">
-                        <li><a href="#" onclick="changeLocale('ua')">UA</a></li>
+                    <#if uri=="/login">
+                        <#if locale = "en">
+                            <li><a href="?lang=ua">UA</a></li>
+                        <#else>
+                            <li><a href="?lang=en">EN</a></li>
+                        </#if>
                     <#else>
-                        <li><a href="#" onclick="changeLocale('en')">EN</a></li>
+                        <#if locale = "en">
+                            <li><a href="#" onclick="changeLocale('ua')">UA</a></li>
+                        <#else>
+                            <li><a href="#" onclick="changeLocale('en')">EN</a></li>
+                        </#if>
+                            <script>function changeLocale(locale) {location.href = "/" + locale + (location.pathname).substring(3);}</script>
                     </#if>
-                    <script>
-                        function changeLocale(locale) {
-                            location.href = "/" + locale + (location.pathname).substring(3);
-                        }
-                    </script>
                 </ul>
             </div>
         </div>
