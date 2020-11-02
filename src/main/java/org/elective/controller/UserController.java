@@ -3,17 +3,15 @@ package org.elective.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elective.dto.UserDTO;
-import org.elective.service.CoursesService;
 import org.elective.service.RegistrationsService;
 import org.elective.service.UserService;
-import org.elective.service.preparing.PagePrepareService;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Slf4j
@@ -28,17 +26,13 @@ public class UserController {
 
     private final UserService userService;
     private final RegistrationsService registrationsService;
-    private final CoursesService coursesService;
-    private final PagePrepareService pagePrepareService;
 
-    @Secured({ "ROLE_ADMIN", "ROLE_TEACHER" })
     @RequestMapping
     public String userPage(@PageableDefault Pageable pageable,
                            @PathVariable Long id,
                            @PathVariable String locale,
                            Map<String, Object> model) {
         log.info("User page (id = {})", id);
-        pagePrepareService.prepareAllStaticOnPage(model, locale);
         model.put(USER_OBJECT, userService.getUserById(id).orElse(null));
         model.put(REGISTRATIONS_LIST, registrationsService.getAllRegistrationsForUser(id, locale, pageable));
         return PAGE_NAME;
@@ -60,7 +54,6 @@ public class UserController {
                                  @PathVariable String locale,
                                  Map<String, Object> model) {
         log.info("User modify (id = {})", id);
-        pagePrepareService.prepareAllStaticOnPage(model, locale);
         model.put(USER_OBJECT, userService.getUserById(id).orElse(null));
         return "user_modify";
     }
@@ -75,5 +68,14 @@ public class UserController {
         user.setId(id);
         userService.modifyUser(user);
         return "redirect:/" + locale + "/users/user_"+id;
+    }
+
+    @ModelAttribute
+    public void preparePage(@PathVariable String locale,
+                            HttpServletRequest request,
+                            Map<String, Object> model) {
+        userService.prepareAllStaticOnPage(model, locale);
+        String uri = request.getRequestURI();
+        model.put("uri", uri);
     }
 }
