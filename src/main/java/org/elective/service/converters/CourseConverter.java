@@ -28,6 +28,8 @@ public class CourseConverter {
                 .signedUp(course.getSignedUp())
                 .subject(i18nSubject)
                 .subjectMapping(course.getSubject().getMapping())
+                .teacherId(course.getTeacher().getId())
+                .teacherName(course.getTeacher().getName())
                 .build();
     }
 
