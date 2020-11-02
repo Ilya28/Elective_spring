@@ -55,20 +55,23 @@
                         <div class="list-group-item">${msg("courses.table.end")}:      ${course.dateEnd}</div>
                         <div class="list-group-item">${msg("courses.table.seats")}:    ${course.signedUp}/${course.seats}</div>
                     </div>
-                </div>
 
-                <#if registered==true>
-                    <#if status=="open">
-                        <a class="btn btn-primary" href="?cancel" role="button">${msg("course.cancel_enrollment")}</a>
-                    <#elseif status=="in_progress">
-                        <a class="btn btn-primary" href="?cancel" role="button">${msg("course.leave")}</a>
+                    <hr class="col-12" />
+
+                    <#if registered==true>
+                        <#if status=="open">
+                            <a class="btn btn-warning" href="${uri}/register/cancel" role="button">${msg("course.cancel_enrollment")}</a>
+                        <#elseif status=="in_progress">
+                            <a class="btn btn-warning" href="${uri}/register/cancel" role="button">${msg("course.leave")}</a>
+                        </#if>
+                    <#else>
+                        <#if status=="open">
+                            <a class="btn btn-primary" href="${uri}/register" role="button">${msg("course.sign_up")}</a>
+                        <#else>
+                            <button type="button" class="btn btn-secondary" disabled>${msg("course.registration_not_available")}</button>
+                        </#if>
                     </#if>
-                </#if>
-                <#if status=="open">
-                    <a class="btn btn-primary" href="course_${course.id}/register" role="button">${msg("course.sign_up")}</a>
-                <#else>
-                    <button type="button" class="btn btn-secondary" disabled>${msg("course.registration_not_available")}</button>
-                </#if>
+                </div>
             </div>
 
         </div>
