@@ -35,6 +35,9 @@ public class Course implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Subject subject;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User teacher;
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Registration> registrationSet;
 
