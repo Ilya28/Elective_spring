@@ -13,5 +13,8 @@ public interface RegistrationRepo extends CrudRepository<Registration, Long> {
     Optional<Registration> findByCourse_IdAndUser_Email(Long courseId, String userEmail);
     Page<Registration> findRegistrationByCourse_NameEN(String courseNameEN, Pageable pageable);
     Page<Registration> findRegistrationsByUser_Id(Long id, Pageable pageable);
+    Page<Registration> findRegistrationsByUser_Email(String email, Pageable pageable);
     Optional<Registration> findRegistrationByUser_IdAndCourse_Id(Long userId, Long courseId);
+
+    void deleteRegistrationByUser_EmailAndCourse_Id(String email, Long id);
 }
