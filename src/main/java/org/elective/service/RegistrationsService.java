@@ -17,6 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+
+/**
+ * Class for working with registrations.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -26,8 +30,20 @@ public class RegistrationsService {
     private final CourseRepo courseRepo;
     private final UserRepo userRepo;
 
+    /**
+     * Get page of all registration for user with the specific id
+     * @param id Id of user
+     * @param locale Locale (for course name in the specific language)
+     * @param pageable for pagination
+     * @return page (paginated list) or RegistrationDTO
+     */
     public Page<RegistrationDTO> getAllRegistrationsForUser(Long id, String locale, Pageable pageable) {
         Page<Registration> page = registrationRepo.findRegistrationsByUser_Id(id, pageable);
+        return page.map(r -> registrationConverter.registrationToRegistrationDTO(r, locale));
+    }
+
+    public Page<RegistrationDTO> getAllRegistrationsForUserWithEmail(String email, String locale, Pageable pageable) {
+        Page<Registration> page = registrationRepo.findRegistrationsByUser_Email(email, pageable);
         return page.map(r -> registrationConverter.registrationToRegistrationDTO(r, locale));
     }
 
@@ -36,6 +52,11 @@ public class RegistrationsService {
         return registration.map(r -> registrationConverter.registrationToRegistrationDTO(r, locale));
     }
 
+    /**
+     * Add registration to user by email for specific course by Id
+     * @param email User email (username)
+     * @param courseId Id of the course
+     */
     @Transactional
     public void registerByEmailAndCourseId(String email, Long courseId) {
         Optional<User> user = userRepo.findByEmail(email);
@@ -54,5 +75,15 @@ public class RegistrationsService {
                 .progress(0)
                 .build();
         registrationRepo.save(registration);
+    }
+
+    /**
+     * Cancel registration to user by email for specific course by Id
+     * @param email User email (username)
+     * @param courseId Id of the course
+     */
+    @Transactional
+    public void cancelRegistrationByEmailAndCourseId(String email, Long courseId) {
+        registrationRepo.deleteRegistrationByUser_EmailAndCourse_Id(email, courseId);
     }
 }
