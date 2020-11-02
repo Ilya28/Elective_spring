@@ -4,6 +4,8 @@ import lombok.*;
 
 @Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RegistrationDTO {
     private Long courseId;
     private String courseName;
