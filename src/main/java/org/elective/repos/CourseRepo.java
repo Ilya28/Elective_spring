@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface CourseRepo  extends CrudRepository<Course, Long> {
     Page<Course> findCoursesBySubjectMapping(String mapping, Pageable pageable);
-    public Page<Course> findAll(Pageable pageable);
+    Page<Course> findAll(Pageable pageable);
     Optional<Course> findCourseByNameEN(String name);
+    Page<Course> findCoursesByTeacher_Email(String name, Pageable pageable);
 }
