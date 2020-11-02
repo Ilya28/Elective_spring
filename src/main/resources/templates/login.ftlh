@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<#if login_error?? || registration_success?? || logout??>
+<!--<#if login_error?? || registration_success?? || logout??>
 <div class="container" style="margin-top: 8px">
     <div class="col-md-6 col-md-offset-3">
         <#if login_error??>
@@ -40,8 +40,17 @@
         </#if>
     </div>
 </div>
+</#if>-->
+
+<#if message??>
+    <div class="container" style="margin-top: 8px">
+        <div class="col-md-6 col-md-offset-3">
+            <h4>${message}</h4>
+        </div>
+    </div>
 </#if>
 
 <@form.login_form/>
+
 </body>
 </html>
