@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elective.dto.SubjectDTO;
 import org.elective.service.SubjectsService;
-import org.elective.service.preparing.PagePrepareService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -20,19 +20,16 @@ public class SubjectsController {
     public static final String ADD_PAGE_NAME = "subject_form";
 
     private final SubjectsService subjectsService;
-    private final PagePrepareService pagePrepareService;
 
     @RequestMapping
     public String subjectsPage(Map<String, Object> model,
                               @PathVariable String locale) {
-        pagePrepareService.prepareAllStaticOnPage(model, locale);
         return SUBJECTS_PAGE_NAME;
     }
 
     @GetMapping("/add")
     public String subjectAddPage(Map<String, Object> model,
                                @PathVariable String locale) {
-        pagePrepareService.prepareAllStaticOnPage(model, locale);
         return ADD_PAGE_NAME;
     }
 
@@ -42,7 +39,6 @@ public class SubjectsController {
                                  @PathVariable String locale) {
         log.info("saving new subject: {}", subject);
         subjectsService.save(subject);
-        pagePrepareService.prepareAllStaticOnPage(model, locale);
         return SUBJECTS_PAGE_NAME;
     }
 
@@ -55,7 +51,15 @@ public class SubjectsController {
         } else {
             log.debug("can't delete subject with mapping: {}", mapping);
         }
-        pagePrepareService.prepareAllStaticOnPage(model, locale);
         return SUBJECTS_PAGE_NAME;
+    }
+
+    @ModelAttribute
+    public void preparePage(@PathVariable String locale,
+                            HttpServletRequest request,
+                            Map<String, Object> model) {
+        subjectsService.prepareAllStaticOnPage(model, locale);
+        String uri = request.getRequestURI();
+        model.put("uri", uri);
     }
 }
