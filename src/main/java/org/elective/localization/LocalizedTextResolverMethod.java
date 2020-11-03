@@ -14,6 +14,13 @@ public class LocalizedTextResolverMethod implements TemplateMethodModelEx {
     private final MessageSource messageSource;
     private final Locale locale;
 
+    /**
+     * Body of custom freemarker method. This method needed for access to messageSource
+     * (locale property files) from '.ftlh' pages.
+     * @param list Key of messageSource (one entity, String)
+     * @return Localized text (String)
+     * @throws TemplateModelException When smth went wrong
+     */
     @Override
     public Object exec(List list) throws TemplateModelException {
         if (list.size() != 1)

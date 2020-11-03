@@ -21,6 +21,11 @@ public class NavbarOnPageService {
     private final SubjectRepo subjectRepo;
     private final SubjectConverter subjectConverter;
 
+    /**
+     * Put subjects (as localized DTO) to model. They are required to display the dropdown list.
+     * @param model Model
+     * @param locale Locale
+     */
     public void putSubjects(Map<String, Object> model, String locale) {
         List<SubjectDTO> subjects = subjectRepo.findAll().stream()
                     .map(subject -> subjectConverter.subjectToSubjectDTO(subject, locale))

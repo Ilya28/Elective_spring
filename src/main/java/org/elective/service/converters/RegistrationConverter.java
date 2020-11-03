@@ -13,6 +13,12 @@ public class RegistrationConverter {
     private final CourseConverter courseConverter;
     private final CoursesService coursesService;
 
+    /**
+     * Converts registration entity to DTO object (and localized it)
+     * @param registration Entity
+     * @param locale Locale
+     * @return DTO object
+     */
     public RegistrationDTO registrationToRegistrationDTO(Registration registration, String locale) {
         CourseDTO course = courseConverter.courseToCourseDTO(registration.getCourse(), locale);
         return RegistrationDTO.builder()

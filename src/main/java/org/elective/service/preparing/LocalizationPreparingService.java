@@ -17,9 +17,20 @@ public class LocalizationPreparingService {
 
     private final MessageSource messageSource;
 
+    /**
+     * Put locale object (String) to model
+     * @param model freemarker Model
+     * @param locale Locale as String ('en' or 'ua')
+     */
     public void putLocale(Map<String, Object> model, String locale) {
         model.put(ENTRY_NAME, locale);
     }
+
+    /**
+     * Put freemarker method, which is needed to get access to locale property
+     * @param model freemarker model
+     * @param locale Locale
+     */
     public void putLocalizedTextSupplier(Map<String, Object> model, String locale) {
         model.put("msg", new LocalizedTextResolverMethod(messageSource, new Locale(locale)));
     }
