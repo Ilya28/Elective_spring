@@ -17,4 +17,6 @@ public interface RegistrationRepo extends CrudRepository<Registration, Long> {
     Optional<Registration> findRegistrationByUser_IdAndCourse_Id(Long userId, Long courseId);
 
     void deleteRegistrationByUser_EmailAndCourse_Id(String email, Long id);
+    void deleteRegistrationsByUser_Id(Long id);
+    void deleteRegistrationsByCourse_Id(Long id);
 }
