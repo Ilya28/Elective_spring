@@ -10,6 +10,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class CourseConverter {
+    /**
+     * Converts course entity to DTO (and localized it)
+     * @param course Entity
+     * @param locale Locale
+     * @return DTO object
+     */
     public CourseDTO courseToCourseDTO(Course course, String locale) {
         String i18nDescription = "ua".equalsIgnoreCase(locale)?
                 course.getDescriptionUA(): course.getDescriptionEN();
@@ -33,12 +39,11 @@ public class CourseConverter {
                 .build();
     }
 
-    public List<CourseDTO> coursesToCoursesDTO(List<Course> courses, String locale) {
-        return courses.stream()
-                .map(c -> courseToCourseDTO(c, locale))
-                .collect(Collectors.toList());
-    }
-
+    /**
+     * Converts DTO object to course entity
+     * @param courseDTO DTO
+     * @return Entity
+     */
     public Course courseDTOToCourse(CourseDTO courseDTO) {
         return Course.builder()
                 .nameEN(courseDTO.getNameEN())
