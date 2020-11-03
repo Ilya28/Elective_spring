@@ -35,9 +35,9 @@
                             <li><a href="/${locale}/courses">${msg("navbar.all_courses")}</a></li>
                         </ul>
                     </li>
-                    <#if role == "admin">
+                    <#if role == "ROLE_ADMIN">
                         <li>
-                            <a href="#">${msg("navbar.users")}</a>
+                            <a href="/${locale}/users">${msg("navbar.users")}</a>
                         </li>
                     </#if>
                 </ul>
