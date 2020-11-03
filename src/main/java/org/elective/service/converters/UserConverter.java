@@ -28,6 +28,11 @@ public class UserConverter {
                 .build();
     }
 
+    /**
+     * Converts user entity to DTO object (and localized it)
+     * @param user Entity
+     * @return DTO object
+     */
     public UserDTO userToUserDTO(User user) {
         return UserDTO.builder()
                 .id(user.getId())
