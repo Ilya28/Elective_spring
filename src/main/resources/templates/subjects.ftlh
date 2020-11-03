@@ -39,7 +39,7 @@
                         <#list subjects as subject>
                             <li class="col-md-3">
                                 <div class="thumbnail" style="padding: 0">
-                                    <a href="${subject.mapping}">
+                                    <a href="/${locale}/courses/${subject.mapping}">
                                         <div style="padding:4px">
                                             <img alt="300x200" style="width: 100%" src="http://placehold.it/200x150">
                                         </div>

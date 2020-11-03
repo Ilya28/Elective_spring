@@ -47,6 +47,12 @@
                             </#if>
                         </div>
                     </div>
+                    <#if role=="ROLE_ADMIN">
+                        <div>
+                            <a class="btn btn-sm btn-danger" href="user_${user.id}/delete" role="button">${msg("btn.delete")}</a>
+                            <a class="btn btn-sm btn-warning" href="user_${user.id}/modify" role="button">${msg("btn.modify")}</a>
+                        </div>
+                    </#if>
                     <br style="clear:both">
                     <h4>${msg("user.registrations")}</h4>
                     <!-- REGISTRATIONS -->
@@ -87,15 +93,9 @@
 
                     <@p.pager "user" registrations/>
 
-
                 </div>
 
-                <#if role=="ROLE_ADMIN">
-                    <div class="text-right">
-                        <a class="btn btn-sm btn-primary" href="user_${user.id}/delete" role="button">${msg("btn.delete")}</a>
-                        <a class="btn btn-sm btn-primary" href="user_${user.id}/modify" role="button">${msg("btn.modify")}</a>
-                    </div>
-                </#if>
+
 
             </div>
 
