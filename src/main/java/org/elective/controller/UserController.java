@@ -44,7 +44,8 @@ public class UserController {
                              @PathVariable String locale,
                              Map<String, Object> model) {
         log.info("User delete (id = {})", id);
-
+        userService.deleteUserById(id);
+        userService.deleteRegistrationsForUserById(id);
         return "redirect:/" + locale + "/users";
     }
 
