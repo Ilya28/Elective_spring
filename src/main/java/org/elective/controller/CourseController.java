@@ -71,6 +71,7 @@ public class CourseController {
                                Map<String, Object> model) {
         log.info("Delete course by ID ({})", id);
         coursesService.deleteCourseById(id);
+        coursesService.deleteRegistrationsForCourseById(id);
         return "redirect:/" + locale + "/courses/" + subject;
     }
 
