@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>${msg("login.title")}</title>
     <@header.all/>
     <link href="/css/registration_form.css" rel="stylesheet">
     <script type="text/javascript" src="/js/registration_action.js"></script>
