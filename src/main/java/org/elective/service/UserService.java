@@ -3,6 +3,7 @@ package org.elective.service;
 import lombok.extern.slf4j.Slf4j;
 import org.elective.dto.UserDTO;
 import org.elective.entity.User;
+import org.elective.repos.RegistrationRepo;
 import org.elective.repos.UserRepo;
 import org.elective.service.converters.UserConverter;
 import org.elective.service.preparing.LocalizationPreparingService;
@@ -18,12 +19,15 @@ import java.util.Optional;
 public class UserService extends AbstractService {
     private final UserRepo userRepo;
     private final UserConverter userConverter;
+    private final RegistrationRepo registrationRepo;
 
     public UserService(LocalizationPreparingService localeService, NavbarOnPageService navbarService,
-                       RoleOnPageService roleService, UserRepo userRepo, UserConverter userConverter) {
+                       RoleOnPageService roleService, UserRepo userRepo, UserConverter userConverter,
+                       RegistrationRepo registrationRepo) {
         super(localeService, navbarService, roleService);
         this.userRepo = userRepo;
         this.userConverter = userConverter;
+        this.registrationRepo = registrationRepo;
     }
 
     public Optional<User> findByEmail(String email){
@@ -54,5 +58,13 @@ public class UserService extends AbstractService {
         User modifiedUser = userConverter.UserDTOToUser(userDTO);
         modifiedUser.setPassword(user.get().getPassword());
         userRepo.save(modifiedUser);
+    }
+
+    public void deleteUserById(Long id) {
+        userRepo.deleteById(id);
+    }
+
+    public void  deleteRegistrationsForUserById(Long id) {
+        registrationRepo.deleteRegistrationsByUser_Id(id);
     }
 }
