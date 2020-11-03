@@ -11,6 +11,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class SubjectConverter {
+    /**
+     * Converts subject entity to DTO object (and localized it)
+     * @param subject Entity
+     * @param locale Locale
+     * @return DTO object
+     */
     public SubjectDTO subjectToSubjectDTO(Subject subject, String locale) {
         String i18nName = "ua".equalsIgnoreCase(locale)? subject.getNameUA(): subject.getNameEN();
         return SubjectDTO.builder()
@@ -20,12 +26,11 @@ public class SubjectConverter {
                 .build();
     }
 
-    public List<SubjectDTO> subjectsToSubjectsDTO(List<Subject> subjects, String locale) {
-        return subjects.stream()
-                .map(c -> subjectToSubjectDTO(c, locale))
-                .collect(Collectors.toList());
-    }
-
+    /**
+     * Converts DTO to subject entity
+     * @param subjectDTO DTO
+     * @return Entity
+     */
     public Subject subjectDTOToSubject(SubjectDTO subjectDTO) {
         return Subject.builder()
                 .backgroundFile(subjectDTO.getBackgroundFile())
