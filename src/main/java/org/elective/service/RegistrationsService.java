@@ -69,6 +69,8 @@ public class RegistrationsService {
             log.warn("Cant find course with id {}", courseId);
             return;
         }
+        course.get().setSignedUp(course.get().getSignedUp() + 1);
+        courseRepo.save(course.get());
         Registration registration = Registration.builder()
                 .id(new Registration.RegistrationPK(courseId, user.get().getId()))
                 .grade(0)
@@ -84,6 +86,13 @@ public class RegistrationsService {
      */
     @Transactional
     public void cancelRegistrationByEmailAndCourseId(String email, Long courseId) {
+        Optional<Course> course = courseRepo.findById(courseId);
+        if (!course.isPresent()) {
+            log.warn("Cant find course with id {}", courseId);
+            return;
+        }
+        course.get().setSignedUp(course.get().getSignedUp() - 1);
+        courseRepo.save(course.get());
         registrationRepo.deleteRegistrationByUser_EmailAndCourse_Id(email, courseId);
     }
 }
