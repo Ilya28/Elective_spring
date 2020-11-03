@@ -1,6 +1,5 @@
 package org.elective.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elective.dto.UserDTO;
 import org.elective.entity.Registration;
