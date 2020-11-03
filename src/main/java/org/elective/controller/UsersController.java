@@ -31,7 +31,7 @@ public class UsersController {
 
     @Secured({"ROLE_ADMIN"})
     @RequestMapping
-    public String usersPage(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String usersPage(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 4) Pageable pageable,
                             @RequestParam(required = false) Optional<String> filterByCourse,
                             @RequestParam(required = false) Optional<String> deleted,
                             @RequestParam(required = false) Optional<String> added,
