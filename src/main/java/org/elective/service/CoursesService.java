@@ -137,6 +137,10 @@ public class CoursesService extends AbstractService {
         courseRepo.deleteById(id);
     }
 
+    public void deleteRegistrationsForCourseById(Long id) {
+        registrationRepo.deleteRegistrationsByCourse_Id(id);
+    }
+
     public Page<CourseDTO> getCoursesByTeacherUsername(String username, String locale, Pageable pageable) {
         Page<Course> page = courseRepo.findCoursesByTeacher_Email(username, pageable);
         return page.map(e -> courseConverter.courseToCourseDTO(e, locale));
