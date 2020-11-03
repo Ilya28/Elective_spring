@@ -1,67 +1,95 @@
 <#import "parts/login_form.ftlh" as form>
 <#import "parts/navbar.ftlh" as navbar>
 <#import "parts/header.ftlh" as header>
+<#import "parts/course_form.ftlh" as course_form>
+<#import "parts/pager.ftlh" as p>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>${msg("courses.title")}</title>
     <@header.all/>
-    <link href="css/pagination.css" rel="stylesheet">
+    <link href="/css/pagination.css" rel="stylesheet">
 </head>
 <body>
-<@navbar.navbar role = "guest"/>
+<@navbar.navbar/>
 
 <br style="clear:both">
 <br style="clear:both">
 <br style="clear:both">
 <div class="col-md-8 col-md-offset-4">
-    <h4>Courses</h4>
+    <h4>${msg("courses.title")}</h4>
 </div>
+
+
 <div class="container">
     <div class="row">
-        <ul class="thumbnails list-unstyled">
+        <div class="col-md-10 col-md-offset-1">
 
-            <#list subjects as subject>
-            <li class="col-md-3">
-                <div class="thumbnail" style="padding: 0">
-                    <div style="padding:4px">
-                        <img alt="300x200" style="width: 100%" src="http://placehold.it/200x150">
-                    </div>
-                    <div class="caption">
-                        <h2>Project C</h2>
-                        <p>My project description</p>
-                        <p><i class="icon icon-map-marker"></i> Place, Country</p>
+            <#if message??>
+                <h4>${message}</h4>
+            </#if>
+
+            <div class="panel panel-default panel-table">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col col-xs-6">
+                            <h3 class="panel-title">${subject}</h3>
+                        </div>
+                        <#if "admin" == "admin" && add_url??>
+                            <div class="col col-xs-6 text-right">
+                                <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
+                                    Create New
+                                </button>
+                            </div>
+                            <div class="collapse" id="collapseForm">
+                                <div class="card card-body">
+                                    <br style="clear:both">
+                                    <@course_form.course_form/>
+                                </div>
+                            </div>
+                        </#if>
                     </div>
                 </div>
-            </li>
-            </#list>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-list">
+                        <thead>
+                        <tr>
+                            <th><em class="fa fa-cog"></em></th>
+                            <th>${msg("courses.table.subject")}</th>
+                            <th>${msg("courses.table.name")}</th>
+                            <th>${msg("courses.table.teacher")}</th>
+                            <th>${msg("courses.table.seats")}</th>
+                            <th>${msg("courses.table.start")}</th>
+                            <th>${msg("courses.table.end")}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list courses.content as item>
+                            <tr>
+                                <td align="center">
+                                    <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                                    <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
+                                </td>
+                                <td>${item.subject}</td>
+                                <td><a href="/${locale}/courses/${item.subjectMapping}/course_${item.id}">${item.name}</a></td>
+                                <td><a href="/${locale}/users/user_${item.teacherId}">${item.teacherName}</a></td>
+                                <td>${item.signedUp} / ${item.seats}</td>
+                                <td>${item.dateStart}</td>
+                                <td>${item.dateEnd}</td>
+                            </tr>
+                        </#list>
+                        </tbody>
 
-        </ul>
-    </div>
-</div>
+                    </table>
 
-<div class="container">
-    <div class="row">
-        <div class="col col-xs-4">Page 1 of 5
-        </div>
-        <div class="col col-xs-8">
-            <ul class="pagination hidden-xs pull-right">
-                <#list 1..5 as i>
-                    <#if i == 2>
-                        <li class="active"><a href="#">${i}<span class="sr-only">(current)</span></a></li>
-                    <#else>
-                        <li><a href="#">${i}</a></li>
-                    </#if>
-                </#list>
-            </ul>
-            <ul class="pagination visible-xs pull-right">
-                <li><a href="#">«</a></li>
-                <li><a href="#">»</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+                </div>
+                <div class="panel-footer">
+                   <@p.pager url courses/>
+                </div>
+            </div>
+
+        </div></div></div>
 
 </body>
 </html>
